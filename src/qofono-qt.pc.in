@@ -1,0 +1,10 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/qofono-qt@QT_MAJOR_VERSION@
+
+Name: qofono-qt@QT_MAJOR_VERSION@
+Description: Qt bindings for ofono
+Version: @QOFONO_VERSION@
+Libs: -L${libdir} -lqofono-qt@QT_MAJOR_VERSION@
+Cflags: -I${includedir}
