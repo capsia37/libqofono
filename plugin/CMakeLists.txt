@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 project(QOfonoQtDeclarative LANGUAGES CXX)
 
+include(GNUInstallDirs)
+
 set(PLUGIN_SOURCES
     qofonodeclarativeplugin.cpp
     qofononetworkoperatorlistmodel.cpp
@@ -10,7 +12,6 @@ set(PLUGIN_SOURCES
 add_library(QOfonoQtDeclarative SHARED ${PLUGIN_SOURCES})
 
 target_include_directories(QOfonoQtDeclarative PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/src
 )
 
@@ -21,11 +22,11 @@ target_link_libraries(QOfonoQtDeclarative PRIVATE
 )
 
 install(TARGETS QOfonoQtDeclarative
-    LIBRARY DESTINATION lib
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-install(FILES qmldir plugin.json plugins.qmltypes
-    DESTINATION lib/qt5/qml/QOfono
+install(FILES qmldir plugins.qmltypes
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/qml/QOfono
 )
 
 add_custom_command(

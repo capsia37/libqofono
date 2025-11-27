@@ -1,208 +1,167 @@
 cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 
-file(GLOB_RECURSE QOFONO_SOURCES CONFIGURE_DEPENDS "*.cpp")
+include(GNUInstallDirs)
 
-add_library(qofono-qt${QT_MAJOR_VERSION} SHARED ${QOFONO_SOURCES})
-
-target_include_directories(qofono-qt${QT_MAJOR_VERSION}
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_assisted_satellite_navigation.xml
-    PROPERTIES
-    CLASSNAME OfonoAssistedSatelliteNavigation
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_audio_settings.xml
-    PROPERTIES
-    CLASSNAME OfonoAudioSettings
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_call_barring.xml
-    PROPERTIES
-    CLASSNAME OfonoCallBarring
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_call_forwarding.xml
-    PROPERTIES
-    CLASSNAME OfonoCallForwarding
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_callmeter.xml
-    PROPERTIES
-    CLASSNAME OfonoCallMeter
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_call_settings.xml
-    PROPERTIES
-    CLASSNAME OfonoCallSettings
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_callvolume.xml
-    PROPERTIES
-    CLASSNAME OfonoCallVolume
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_cell_broadcast.xml
-    PROPERTIES
-    CLASSNAME OfonoCellBroadcast
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_connection_context.xml
-    PROPERTIES
-    CLASSNAME OfonoConnectionContext
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_connection_manager.xml
-    PROPERTIES
-    CLASSNAME OfonoConnectionManager
-    INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_location_reporting.xml
-    PROPERTIES
-    CLASSNAME OfonoLocationReporting
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_handsfree.xml
-    PROPERTIES
-    CLASSNAME OfonoHandsfree
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_handsfree_audio_agent.xml
-    PROPERTIES
-    CLASSNAME OfonoHandsfreeAudioAgent
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_handsfree_audio_card.xml
-    PROPERTIES
-    CLASSNAME OfonoHandsfreeAudioCard
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_handsfree_audio_manager.xml
-    PROPERTIES
-    CLASSNAME OfonoHandsfreeAudioManager
-    INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_manager.xml
-    PROPERTIES
-    CLASSNAME OfonoManager
-    INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_message.xml
-    PROPERTIES
-    CLASSNAME OfonoMessage
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_message_manager.xml
-    PROPERTIES
-    CLASSNAME OfonoMessageManager
-    INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_messagewaiting.xml
-    PROPERTIES
-    CLASSNAME OfonoMessageWaiting
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_modem.xml
-    PROPERTIES
-    CLASSNAME OfonoModem
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_network_operator.xml
-    PROPERTIES
-    CLASSNAME OfonoNetworkOperator
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_network_registration.xml
-    PROPERTIES
-    CLASSNAME OfonoNetworkRegistration
-    INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_phonebook.xml
-    PROPERTIES
-    CLASSNAME OfonoPhonebook
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_push_notification.xml
-    PROPERTIES
-    CLASSNAME OfonoPushNotification
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_radio_settings.xml
-    PROPERTIES
-    CLASSNAME OfonoRadioSettings
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_simmanager.xml
-    PROPERTIES
-    CLASSNAME OfonoSimManager
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging.xml
-    PROPERTIES
-    CLASSNAME OfonoSmartMessaging
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_supplementary_services.xml
-    PROPERTIES
-    CLASSNAME OfonoSupplementaryServices
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_text_telephony.xml
-    PROPERTIES
-    CLASSNAME OfonoTextTelephony
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_voice_call.xml
-    PROPERTIES
-    CLASSNAME OfonoVoiceCall
-)
-set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_voicecallmanager.xml
-    PROPERTIES
-    CLASSNAME OfonoVoiceCallManager
-    INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h
+add_library(
+    qofono-qt${QT_MAJOR_VERSION} SHARED 
+    qofono.cpp
+    qofonodbustypes.cpp
+    qofonoobject.cpp
+    qofonomanager.cpp
+    qofonomodem.cpp
+    qofonomodeminterface.cpp
+    qofonomodeminterface2.cpp
+    qofonoassistedsatellitenavigation.cpp
+    qofonoconnectionmanager.cpp
+    qofonoconnectioncontext.cpp
+    qofononetworkregistration.cpp
+    qofononetworkoperator.cpp
+    qofonocellbroadcast.cpp
+    qofonocallbarring.cpp
+    qofonocallforwarding.cpp
+    qofonocallmeter.cpp
+    qofonocallsettings.cpp
+    qofonocallvolume.cpp
+    qofonohandsfree.cpp
+    qofonohandsfreeaudioagent.cpp
+    qofonohandsfreeaudiocard.cpp
+    qofonohandsfreeaudiomanager.cpp
+    qofonoipmultimediasystem.cpp
+    qofonolocationreporting.cpp
+    qofonomessage.cpp
+    qofonomessagemanager.cpp
+    qofonomessagewaiting.cpp
+    qofonosimmanager.cpp
+    qofonosimwatcher.cpp
+    qofonophonebook.cpp
+    qofonopositioningrequestagent.cpp
+    qofonosmartmessaging.cpp
+    qofonosmartmessagingagent.cpp
+    qofonovoicecall.cpp
+    qofonovoicecallmanager.cpp
+    qofonoradiosettings.cpp
+    qofonosupplementaryservices.cpp
+    qofonotexttelephony.cpp
 )
 
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_assisted_satellite_navigation.xml ofono_assisted_satellite_navigation_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_audio_settings.xml ofono_audio_settings_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_call_barring.xml ofono_call_barring_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_call_forwarding.xml ofono_call_forwarding_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_callmeter.xml ofono_callmeter_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_call_settings.xml ofono_call_settings_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_callvolume.xml ofono_callvolume_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_cell_broadcast.xml ofono_cell_broadcast_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_connection_context.xml ofono_connection_context_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_connection_manager.xml ofono_connection_manager_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_location_reporting.xml ofono_location_reporting_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_handsfree.xml ofono_handsfree_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_handsfree_audio_agent.xml ofono_handsfree_audio_agent_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_handsfree_audio_card.xml ofono_handsfree_audio_card_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_handsfree_audio_manager.xml ofono_handsfree_audio_manager_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_manager.xml ofono_manager_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_message.xml ofono_message_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_message_manager.xml ofono_message_manager_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_messagewaiting.xml ofono_messagewaiting_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_modem.xml ofono_modem_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_network_operator.xml ofono_network_operator_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_network_registration.xml ofono_network_registration_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_phonebook.xml ofono_phonebook_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_push_notification.xml ofono_push_notification_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_radio_settings.xml ofono_radio_settings_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_simmanager.xml ofono_simmanager_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging.xml ofono_smart_messaging_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_supplementary_services.xml ofono_supplementary_services_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_text_telephony.xml ofono_text_telephony_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_voice_call.xml ofono_voice_call_interface)
-qt_add_dbus_interface(_dbus_ifaces ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_voicecallmanager.xml ofono_voicecallmanager_interface)
-target_sources(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${_dbus_ifaces})
+set(PUBLIC_HEADER_FILES
+    qofono.h
+    qofono_global.h
+    qofonoobject.h
+    qofonomanager.h
+    dbustypes.h
+    qofonomodem.h
+    qofonomodeminterface.h
+    qofonomodeminterface2.h
+    qofonoassistedsatellitenavigation.h
+    qofonoconnectionmanager.h
+    qofonoconnectioncontext.h
+    qofononetworkregistration.h
+    qofononetworkoperator.h
+    qofonocellbroadcast.h
+    qofonocallbarring.h
+    qofonocallforwarding.h
+    qofonoipmultimediasystem.h
+    qofonolocationreporting.h
+    qofonocallmeter.h
+    qofonocallsettings.h
+    qofonocallvolume.h
+    qofonohandsfree.h
+    qofonohandsfreeaudioagent.h
+    qofonohandsfreeaudiocard.h
+    qofonohandsfreeaudiomanager.h
+    qofonomessage.h
+    qofonomessagemanager.h
+    qofonomessagewaiting.h
+    qofonosimmanager.h
+    qofonosimwatcher.h
+    qofonophonebook.h
+    qofonopositioningrequestagent.h
+    qofonosmartmessaging.h
+    qofonosmartmessagingagent.h
+    qofonovoicecall.h
+    qofonovoicecallmanager.h
+    qofonoradiosettings.h
+    qofonosupplementaryservices.h
+    qofonotexttelephony.h
+)
+
+set_target_properties(
+    qofono-qt${QT_MAJOR_VERSION}
+    PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+)
+
+
+target_compile_definitions(qofono-qt${QT_MAJOR_VERSION} PRIVATE QOFONO_LIBRARY)
+
+target_compile_options(qofono-qt${QT_MAJOR_VERSION} PRIVATE -Wno-unused-parameter)
+
 target_include_directories(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+
+target_link_libraries(qofono-qt${QT_MAJOR_VERSION}
+    PRIVATE Qt5::Core Qt5::DBus
+)
+
+### DBus interfaces and adaptors ###
+
+set(_dbus_ifaces "")
+set(_xml_files "")
+
+function(ofono_dbus FILENAME CLASSNAME)
+    set(_path "${CMAKE_CURRENT_SOURCE_DIR}/dbus/${FILENAME}")
+    string(REPLACE ".xml" "_interface" _interface "${FILENAME}")
+    cmake_parse_arguments(_ofo "" "INCLUDE" "" "${ARGN}")
+    
+    if(NOT EXISTS ${_path})
+        message(FATAL_ERROR "DBus-XML source ${_path} does not exist")
+    endif()
+
+    set_source_files_properties(${_path} PROPERTIES CLASSNAME ${CLASSNAME})
+    
+    if(_ofo_INCLUDE)
+        set_source_files_properties(${_path} PROPERTIES INCLUDE ${_ofo_INCLUDE})
+    endif()
+
+    list(APPEND _xml_files ${_path})
+    set(_xml_files ${_xml_files} PARENT_SCOPE)
+
+    qt_add_dbus_interface(_dbus_ifaces ${_path} ${_interface})
+    set(_dbus_ifaces ${_dbus_ifaces} PARENT_SCOPE)
+endfunction()
+
+ofono_dbus(ofono_assisted_satellite_navigation.xml OfonoAssistedSatelliteNavigation)
+ofono_dbus(ofono_call_barring.xml OfonoCallBarring)
+ofono_dbus(ofono_call_forwarding.xml OfonoCallForwarding)
+ofono_dbus(ofono_callmeter.xml OfonoCallMeter)
+ofono_dbus(ofono_call_settings.xml OfonoCallSettings)
+ofono_dbus(ofono_callvolume.xml OfonoCallVolume)
+ofono_dbus(ofono_cell_broadcast.xml OfonoCellBroadcast)
+ofono_dbus(ofono_handsfree.xml OfonoHandsfree)
+ofono_dbus(ofono_handsfree_audio_agent.xml OfonoHandsfreeAudioAgent)
+ofono_dbus(ofono_handsfree_audio_card.xml OfonoHandsfreeAudioCard)
+ofono_dbus(ofono_handsfree_audio_manager.xml OfonoHandsfreeAudioManager INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h)
+ofono_dbus(ofono_connection_context.xml OfonoConnectionContext)
+ofono_dbus(ofono_connection_manager.xml OfonoConnectionManager INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h)
+ofono_dbus(ofono_location_reporting.xml OfonoLocationReporting)
+ofono_dbus(ofono_manager.xml OfonoManager INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h)
+ofono_dbus(ofono_message.xml OfonoMessage)
+ofono_dbus(ofono_message_manager.xml OfonoMessageManager INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h)
+ofono_dbus(ofono_messagewaiting.xml OfonoMessageWaiting)
+ofono_dbus(ofono_modem.xml OfonoModem)
+ofono_dbus(ofono_network_operator.xml OfonoNetworkOperator)
+ofono_dbus(ofono_network_registration.xml OfonoNetworkRegistration INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h)
+ofono_dbus(ofono_phonebook.xml OfonoPhonebook)
+ofono_dbus(ofono_radio_settings.xml OfonoRadioSettings)
+ofono_dbus(ofono_simmanager.xml OfonoSimManager)
+ofono_dbus(ofono_smart_messaging.xml OfonoSmartMessaging)
+ofono_dbus(ofono_supplementary_services.xml OfonoSupplementaryServices)
+ofono_dbus(ofono_text_telephony.xml OfonoTextTelephony)
+ofono_dbus(ofono_voice_call.xml OfonoVoiceCall)
+ofono_dbus(ofono_voicecallmanager.xml OfonoVoiceCallManager INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/dbustypes.h)
+
+target_sources(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${_dbus_ifaces})
 
 # FIXME: qdbusxml2cpp doesn't use QMetaObject::invokeMethod(parent(), ...) to emit signals, when using the qt_add_dbus_adaptor generated adaptors because it is invoked with a parent class.
 # Might be useful to set a specific parent class that implements all the methods to emit signals.
@@ -253,38 +212,42 @@ add_custom_command(
 )
 
 target_sources(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${_adaptor_files})
-target_include_directories(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(qofono-qt${QT_MAJOR_VERSION}
-    PRIVATE Qt5::Core Qt5::DBus
+
+LIST(APPEND _xml_files 
+    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_audio_settings.xml
+    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_push_notification.xml
+    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml
 )
 
+LIST(REMOVE_ITEM _xml_files
+    ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_location_reporting.xml
+)
+
+### INSTALL ###
+
+# Library
 install(TARGETS qofono-qt${QT_MAJOR_VERSION}
-    LIBRARY DESTINATION lib
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-target_compile_definitions(qofono-qt${QT_MAJOR_VERSION} PRIVATE QOFONO_LIBRARY)
-target_compile_options(qofono-qt${QT_MAJOR_VERSION} PRIVATE -Wno-unused-parameter)
-
-# Install public headers (private headers ending with _p.h excluded)
-file(GLOB PUBLIC_HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
-list(FILTER PUBLIC_HEADER_FILES EXCLUDE REGEX "_p\\.h$")
+# Public headers
 install(FILES ${PUBLIC_HEADER_FILES}
-    DESTINATION include/qofono-qt${QT_MAJOR_VERSION}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/qofono-qt${QT_MAJOR_VERSION}
 )
 
-# Install DBus XML files
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dbus/
-    DESTINATION include/qofono-qt${QT_MAJOR_VERSION}/dbus
-    FILES_MATCHING PATTERN "*.xml"
+# DBus XML files
+install(FILES ${_xml_files}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/qofono-qt${QT_MAJOR_VERSION}/dbus
 )
 
-# Install .prf file
+# .prf file
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qofono-qt${QT_MAJOR_VERSION}.prf
-    DESTINATION share/qt${QT_MAJOR_VERSION}/mkspecs/features
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/qt${QT_MAJOR_VERSION}/mkspecs/features
 )
 
-# Generate pkg-config file (qmake create_pc)
+# pkg-config file (qmake create_pc)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qofono-qt.pc.in ${CMAKE_CURRENT_BINARY_DIR}/qofono-qt${QT_MAJOR_VERSION}.pc @ONLY)
+
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qofono-qt${QT_MAJOR_VERSION}.pc
-    DESTINATION lib/pkgconfig
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
 )

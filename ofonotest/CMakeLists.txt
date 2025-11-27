@@ -17,5 +17,5 @@ install(TARGETS ofonotest
 )
 
 install(FILES qml/ofonotest/main.qml
-    DESTINATION ${OFONO_EXAMPLES_PREFIX}/qml/ofonotest
+    DESTINATION ${OFONO_EXAMPLES_PREFIX}/qml/ofonotest/main.qml
 )
