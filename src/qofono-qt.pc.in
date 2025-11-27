@@ -5,6 +5,6 @@ includedir=${prefix}/include/qofono-qt@QT_MAJOR_VERSION@
 
 Name: qofono-qt@QT_MAJOR_VERSION@
 Description: Qt bindings for ofono
-Version: @QOFONO_VERSION@
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -lqofono-qt@QT_MAJOR_VERSION@
 Cflags: -I${includedir}

@@ -1,4 +1,4 @@
-find_package(Qt5 COMPONENTS Core DBus XmlPatterns REQUIRED)
+cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 
 file(GLOB_RECURSE QOFONO_SOURCES CONFIGURE_DEPENDS "*.cpp")
 
@@ -237,7 +237,7 @@ set(_adaptor_files
 # Generate ofono_positioning_request_agent_adaptor.{cpp,h}
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor.cpp ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor.h
-    COMMAND qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor -N -c QOfonoPositioningRequestAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
+    COMMAND Qt5::qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor -N -c QOfonoPositioningRequestAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
     COMMENT "Generating QDBus adaptor for ofono_positioning_request_agent"
     VERBATIM
@@ -246,20 +246,16 @@ add_custom_command(
 # Generate ofono_smart_messaging_agent_adaptor.{cpp,h}
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.cpp ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.h
-    COMMAND qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor -N -c QOfonoSmartMessagingAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml 
+    COMMAND Qt5::qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor -N -c QOfonoSmartMessagingAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml 
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml
     COMMENT "Generating QDBus adaptor for ofono_smart_messaging_agent"
     VERBATIM
 )
 
-add_custom_target(qofono_adaptors ALL DEPENDS ${_adaptor_files})
-add_dependencies(qofono-qt${QT_MAJOR_VERSION} qofono_adaptors)
-
-
 target_sources(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${_adaptor_files})
 target_include_directories(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_link_libraries(qofono-qt${QT_MAJOR_VERSION}
-    PRIVATE Qt5::Core Qt5::DBus Qt5::XmlPatterns
+    PRIVATE Qt5::Core Qt5::DBus
 )
 
 install(TARGETS qofono-qt${QT_MAJOR_VERSION}
@@ -288,9 +284,6 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qofono-qt${QT_MAJOR_VERSION}.prf
 )
 
 # Generate pkg-config file (qmake create_pc)
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/version.pri" _vcontent)
-string(REGEX MATCH "VERSION[ \t]*=[ \t]*([0-9.]+)" _match "${_vcontent}")
-set(QOFONO_VERSION "${CMAKE_MATCH_1}")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qofono-qt.pc.in ${CMAKE_CURRENT_BINARY_DIR}/qofono-qt${QT_MAJOR_VERSION}.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qofono-qt${QT_MAJOR_VERSION}.pc
     DESTINATION lib/pkgconfig

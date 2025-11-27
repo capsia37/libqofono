@@ -1,4 +1,4 @@
-find_package(Qt5 REQUIRED COMPONENTS Core Test DBus)
+cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 
 file(GLOB TEST_SRCS "tst_*.cpp")
 

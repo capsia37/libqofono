@@ -1,7 +1,5 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 project(ofonotest LANGUAGES CXX)
-
-find_package(Qt5 COMPONENTS Quick Qml REQUIRED)
 
 add_executable(ofonotest
     main.cpp
@@ -10,11 +8,6 @@ add_executable(ofonotest
 target_link_libraries(ofonotest PRIVATE
     Qt5::Quick
     Qt5::Qml
-)
-
-set_target_properties(ofonotest PROPERTIES
-    CXX_STANDARD 11
-    CXX_STANDARD_REQUIRED ON
 )
 
 set(OFONO_EXAMPLES_PREFIX "/opt/examples/libqofono-qt${QT_MAJOR_VERSION}")

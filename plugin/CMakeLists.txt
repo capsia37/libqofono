@@ -1,7 +1,5 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 project(QOfonoQtDeclarative LANGUAGES CXX)
-
-find_package(Qt5 COMPONENTS Qml DBus REQUIRED)
 
 set(PLUGIN_SOURCES
     qofonodeclarativeplugin.cpp
@@ -20,12 +18,6 @@ target_link_libraries(QOfonoQtDeclarative PRIVATE
     Qt5::Qml
     Qt5::DBus
     qofono-qt${QT_MAJOR_VERSION}
-)
-
-set_target_properties(QOfonoQtDeclarative PROPERTIES
-    OUTPUT_NAME "QOfonoQtDeclarative"
-    CXX_STANDARD 11
-    CXX_STANDARD_REQUIRED ON
 )
 
 install(TARGETS QOfonoQtDeclarative
