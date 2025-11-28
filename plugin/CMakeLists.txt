@@ -22,7 +22,7 @@ target_link_libraries(QOfonoQtDeclarative PRIVATE
 )
 
 install(TARGETS QOfonoQtDeclarative
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/qml/QOfono
 )
 
 install(FILES qmldir plugins.qmltypes
