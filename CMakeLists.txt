@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 project(libqofono
-    VERSION 0.115
+    VERSION 0.124
     DESCRIPTION "Library for accessing the ofono daemon"
     HOMEPAGE_URL "https://github.com/sailfishos/libqofono"
     LANGUAGES CXX
