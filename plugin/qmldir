@@ -1,3 +1,0 @@
-module QOfono
-plugin QOfonoQtDeclarative
-typeinfo plugins.qmltypes
