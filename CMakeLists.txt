@@ -1,12 +1,14 @@
 cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
+
+set(LIBQOFONO_VERSION "0.124" CACHE STRING "libqofono version")
+set(QT_MAJOR_VERSION 5 CACHE STRING "Qt major version")
+
 project(libqofono
-    VERSION 0.124
+    VERSION ${LIBQOFONO_VERSION}
     DESCRIPTION "Library for accessing the ofono daemon"
     HOMEPAGE_URL "https://github.com/sailfishos/libqofono"
     LANGUAGES CXX
 )
-
-set(QT_MAJOR_VERSION 5 CACHE STRING "Qt major version")
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
