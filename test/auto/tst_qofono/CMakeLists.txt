@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.12.0 FATAL_ERROR)
 project(tst_qofonotest-qt${QT_MAJOR_VERSION} LANGUAGES CXX)
 
 add_executable(tst_qofonotest-qt${QT_MAJOR_VERSION}
