@@ -101,7 +101,7 @@ target_compile_options(qofono-qt${QT_MAJOR_VERSION} PRIVATE -O2 -Wno-unused-para
 target_include_directories(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(qofono-qt${QT_MAJOR_VERSION}
-    PRIVATE Qt5::Core Qt5::DBus
+    PRIVATE ${QTCORE_LIB} ${QTDBUS_LIB}
 )
 
 ### DBus interfaces and adaptors ###
@@ -193,23 +193,43 @@ set(_adaptor_files
     ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.h
 )
 
-# Generate ofono_positioning_request_agent_adaptor.{cpp,h}
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor.cpp ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor.h
-    COMMAND Qt5::qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor -N -c QOfonoPositioningRequestAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
-    COMMENT "Generating QDBus adaptor for ofono_positioning_request_agent"
-    VERBATIM
-)
+if(QT_MAJOR_VERSION STREQUAL "6")
+    # Generate ofono_positioning_request_agent_adaptor.{cpp,h}
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor.cpp ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor.h
+        COMMAND Qt6::qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor -N -c QOfonoPositioningRequestAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
+        COMMENT "Generating QDBus adaptor for ofono_positioning_request_agent"
+        VERBATIM
+    )
 
-# Generate ofono_smart_messaging_agent_adaptor.{cpp,h}
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.cpp ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.h
-    COMMAND Qt5::qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor -N -c QOfonoSmartMessagingAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml 
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml
-    COMMENT "Generating QDBus adaptor for ofono_smart_messaging_agent"
-    VERBATIM
-)
+    # Generate ofono_smart_messaging_agent_adaptor.{cpp,h}
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.cpp ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.h
+        COMMAND Qt6::qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor -N -c QOfonoSmartMessagingAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml 
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml
+        COMMENT "Generating QDBus adaptor for ofono_smart_messaging_agent"
+        VERBATIM
+    )
+else()
+    # Generate ofono_positioning_request_agent_adaptor.{cpp,h}
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor.cpp ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor.h
+        COMMAND Qt5::qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_positioning_request_agent_adaptor -N -c QOfonoPositioningRequestAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_positioning_request_agent.xml
+        COMMENT "Generating QDBus adaptor for ofono_positioning_request_agent"
+        VERBATIM
+    )
+
+    # Generate ofono_smart_messaging_agent_adaptor.{cpp,h}
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.cpp ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor.h
+        COMMAND Qt5::qdbusxml2cpp -a ${CMAKE_CURRENT_BINARY_DIR}/ofono_smart_messaging_agent_adaptor -N -c QOfonoSmartMessagingAgentAdaptor ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml 
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/dbus/ofono_smart_messaging_agent.xml
+        COMMENT "Generating QDBus adaptor for ofono_smart_messaging_agent"
+        VERBATIM
+    )
+endif()
 
 target_sources(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${_adaptor_files})
 

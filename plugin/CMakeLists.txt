@@ -16,20 +16,22 @@ target_include_directories(QOfonoQtDeclarative PRIVATE
 )
 
 target_link_libraries(QOfonoQtDeclarative PRIVATE
-    Qt5::Qml
-    Qt5::DBus
+    ${QTQML_LIB}
+    ${QTDBUS_LIB}
     qofono-qt${QT_MAJOR_VERSION}
 )
 
 install(TARGETS QOfonoQtDeclarative
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/qml/QOfono
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt${QT_MAJOR_VERSION}/qml/QOfono
 )
 
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/QOfono/qmldir
-    ${CMAKE_CURRENT_BINARY_DIR}/plugins.qmltypes
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/qml/QOfono
-)
+if(QT_MAJOR_VERSION STREQUAL "5")
+    install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/QOfono/qmldir
+        ${CMAKE_CURRENT_BINARY_DIR}/plugins.qmltypes
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/qml/QOfono
+    )
+endif()
 
 # Helper to replicate Qt6 qt_add_qml_module behavior for Qt5 builds.
 # Generates a qmldir and plugins.qmltypes file for the given target.
@@ -78,8 +80,16 @@ function(qt5_add_qml_module TARGET)
     )
 endfunction()
 
-qt5_add_qml_module(
-    QOfonoQtDeclarative
-    URI QOfono
-    VERSION 0.2
-)
+if(QT_MAJOR_VERSION STREQUAL "6")
+    qt_add_qml_module(
+        QOfonoQtDeclarative
+        URI QOfono
+        VERSION 0.2
+    )
+else()
+    qt5_add_qml_module(
+        QOfonoQtDeclarative
+        URI QOfono
+        VERSION 0.2
+    )
+endif()
