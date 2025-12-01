@@ -96,7 +96,7 @@ set_target_properties(
 
 target_compile_definitions(qofono-qt${QT_MAJOR_VERSION} PRIVATE QOFONO_LIBRARY)
 
-target_compile_options(qofono-qt${QT_MAJOR_VERSION} PRIVATE -Wno-unused-parameter)
+target_compile_options(qofono-qt${QT_MAJOR_VERSION} PRIVATE -O2 -Wno-unused-parameter -fvisibility=hidden -fvisibility-inlines-hidden)
 
 target_include_directories(qofono-qt${QT_MAJOR_VERSION} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
