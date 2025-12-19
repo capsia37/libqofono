@@ -6,22 +6,46 @@ set(PLUGIN_SOURCES
     qofonosimlistmodel.cpp
 )
 
-add_library(QOfonoQtDeclarative SHARED ${PLUGIN_SOURCES})
+if(QT_MAJOR_VERSION STREQUAL "6")
+    qt_policy(SET QTP0001 NEW)
+
+    qt6_add_qml_module(
+        QOfonoQtDeclarative
+        URI QOfono
+        VERSION 0.2
+        SHARED
+        PLUGIN_TARGET QOfonoQtDeclarative
+        OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/QOfono
+        SOURCES ${PLUGIN_SOURCES}
+        NO_GENERATE_PLUGIN_SOURCE
+        NO_PLUGIN_OPTIONAL
+    )
+else()
+    add_library(QOfonoQtDeclarative SHARED ${PLUGIN_SOURCES})
+endif()
 
 target_include_directories(QOfonoQtDeclarative PRIVATE
     ${CMAKE_SOURCE_DIR}/src
 )
 
 target_link_libraries(QOfonoQtDeclarative PRIVATE
-    Qt5::Qml
-    Qt5::DBus
+    ${QTQML_LIB}
+    ${QTDBUS_LIB}
     qofono-qt${QT_MAJOR_VERSION}
 )
 
 install(TARGETS QOfonoQtDeclarative
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/qml/QOfono
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt${QT_MAJOR_VERSION}/qml/QOfono
 )
 
-install(FILES qmldir plugins.qmltypes
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/qml/QOfono
-)
+if(QT_MAJOR_VERSION STREQUAL "6")
+    install(FILES 
+        ${CMAKE_CURRENT_BINARY_DIR}/QOfono/qmldir
+        ${CMAKE_CURRENT_BINARY_DIR}/QOfono/QOfonoQtDeclarative.qmltypes
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt6/qml/QOfono
+    )
+elseif(QT_MAJOR_VERSION STREQUAL "5")
+    install(FILES qmldir plugins.qmltypes
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/qml/QOfono
+    )
+endif()
